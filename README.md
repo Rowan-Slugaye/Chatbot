@@ -1,13 +1,13 @@
-# dev bot goes down and up as developed but main does not and will stay updated every so and so often here is the invite link for main
+# dev bot goes down and up as developed but main does not and will stay updated every so and so often here is the invite link for main /n
 [Link to get main on discord server yes it is online same code as github if not forgoten to update](https://discord.com/oauth2/authorize?client_id=1208530587544191057&permissions=0&scope=bot)
 this is so you dont have to host it becuse it should be up to date
 
 
 
 
+Bot made in Replit with Discord.py eksemple use replit if you want to use and edit your own version while making it [link to Replit where you can fork](https://replit.com/@NoahGrimstad/test-Chatbot) 
 
-
-# Python Discord Bot
+## Python Discord Bot
 
 This is a starting point for making your own Discord bot using Python and the [discordpy](https://discordpy.readthedocs.io/) library.
 Read [their getting-started guides](https://discordpy.readthedocs.io/en/stable/#getting-started) to get the most out of this template.
