@@ -40,39 +40,33 @@ class RPSView(discord.ui.View):
     # Store the choice made by the user
     self.choices[user_id] = custom_id
 
-    # If only one player has made their choice and the opponent is AI, proceed to determine the winner
+    # If only one player has made their choice and the opponent is AI, make AI's choice
     if len(self.choices) == 1 and self.opponent == client.user:
-      await interaction.response.send_message(
-          f"{self.initiator.mention}, please make your choice and mention {self.opponent.mention} to play against!",
-          ephemeral=True)
-    # If only one player has made their choice and the initiator is AI, ask the opponent to make a choice
-    elif len(self.choices) == 1 and self.initiator == client.user:
-      await interaction.response.send_message(
-          f"{self.opponent.mention}, please make your choice and mention {self.initiator.mention} to play against!",
-          ephemeral=True)
-    # If both players have made their choices or if the AI has made its choice, determine the winner
-    elif len(self.choices) == 2 or (len(self.choices) == 1 and self.ai_choice):
+      self.ai_choice = random.choice(self.options)
+      self.choices[self.opponent.id] = self.ai_choice
+      await self.determine_winner(interaction)
+      print(self.choices)
+    # If both players have made their choices, determine the winner
+    elif len(self.choices) == 2:
       await self.determine_winner(interaction)
 
   async def determine_winner(self, interaction):
-    # If AI hasn't made its choice yet and opponent is AI, make it now
-    if not self.ai_choice and self.opponent == client.user:
-      self.ai_choice = random.choice(self.options)
-
     # Get user IDs of both players
     player1_id = next(iter(self.choices.keys()))
 
     # Get choices made by both players
     player1_choice = self.choices[player1_id]
     player2_choice = self.choices.get(self.opponent.id, self.ai_choice)
+    print("player 1", player1_choice)
+    print("player 2", player2_choice)
 
     # Determine the winner
     winner = None
     if player1_choice == player2_choice:
       pass
-    elif (player1_choice == 'rock' and player2_choice == 'scissors') or \
-            (player1_choice == 'paper' and player2_choice == 'rock') or \
-            (player1_choice == 'scissors' and player2_choice == 'paper'):
+    elif (player1_choice == 'Rock' and player2_choice == 'Scissors') or \
+            (player1_choice == 'Paper' and player2_choice == 'Rock') or \
+            (player1_choice == 'Scissors' and player2_choice == 'Paper'):
       winner = player1_id
     else:
       winner = self.opponent.id
@@ -87,10 +81,10 @@ class RPSView(discord.ui.View):
           content=f"{initial_message}\n<@{winner}> wins!")
 
       loser_id = player1_id if winner == self.opponent.id else self.opponent.id
-      loser_message = f"<@{loser_id}> lost! {self.choices[player1_id]} vs {player2_choice}"
+      loser_message = f"<@{loser_id}> lost! {self.choices[loser_id]} vs {self.choices[winner]}"
 
       # Send a single message stating who won and who lost
-      final_message = f"<@{winner}> wins! {self.choices[player1_id]} vs {player2_choice}\n{loser_message}"
+      final_message = f"<@{winner}> wins! {self.choices[winner]} vs {self.choices[loser_id]}\n{loser_message}"
       await interaction.channel.send(final_message)
 
       # Delete the original message
@@ -98,6 +92,7 @@ class RPSView(discord.ui.View):
     else:
       result_message = "It's a tie!"
       await interaction.message.edit(content=result_message)
+
 
 
 class DiceView(discord.ui.View):
@@ -123,7 +118,7 @@ class DiceView(discord.ui.View):
       return
 
     # Get the custom ID of the clicked button
-    custom_id = interaction.data['custom_id']
+    interaction.data['custom_id']
     user_id = interaction.user.id
 
     # Store the choice made by the user
@@ -190,7 +185,7 @@ class DiceView(discord.ui.View):
 @client.event
 async def on_ready():
   await client.change_presence(activity=discord.Game(
-      name="V: 0.2.2 and Created by Rowan"))
+      name="V: 0.2.4 and Created by Rowan Slugaye"))
   print('We have logged in as {0.user}'.format(client))
 
 
@@ -202,18 +197,16 @@ async def on_message(message):
   if message.content.startswith('!ping'):
     await message.channel.send('pong!')
   if message.content.startswith('!help'):
-    help_message = """**Available Commands:**\n- `!ping`: Responds with "pong!"\n- `!help`: Displays this help message\n- `!Version`: Displays the current version\n- `!rps`: Starts a game of Rock, Paper, Scissors with a mentioned user"""
+    help_message = """**Available Commands:**\n- `!ping`: Responds with "pong!"\n- `!help`: Displays this help message\n- `!Version`: Displays the current version\n- `!rps`: Starts a game of Rock, Paper, Scissors with a mentioned user or bot if no user is mentioned\n- `!dice`: Starts a game of Dice with a mentioned user or bot if no user is mentioned\n-"""
     await message.channel.send(help_message)
   if message.content.startswith('!Version'):
-    await message.channel.send('0.2.2')
+    await message.channel.send('0.2.4')
   if message.content.startswith('!rps'):
     options = ["Rock", "Paper", "Scissors"]
 
     # Determine opponent
-    if len(message.mentions) == 0:
-      await message.channel.send("Please mention someone to play against!")
-      return
-    opponent = message.mentions[0]
+    opponent = client.user if len(
+        message.mentions) == 0 else message.mentions[0]
 
     # Print the players in console
     print(f"{message.author} is playing against {opponent}")
