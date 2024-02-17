@@ -94,7 +94,6 @@ class RPSView(discord.ui.View):
       await interaction.message.edit(content=result_message)
 
 
-
 class DiceView(discord.ui.View):
 
   def __init__(self, options, initiator, opponent):
@@ -185,7 +184,7 @@ class DiceView(discord.ui.View):
 @client.event
 async def on_ready():
   await client.change_presence(activity=discord.Game(
-      name="V: 0.2.4 and Created by Rowan Slugaye"))
+      name="V: 0.2.5 and Created by Rowan Slugaye"))
   print('We have logged in as {0.user}'.format(client))
 
 
@@ -200,7 +199,7 @@ async def on_message(message):
     help_message = """**Available Commands:**\n- `!ping`: Responds with "pong!"\n- `!help`: Displays this help message\n- `!Version`: Displays the current version\n- `!rps`: Starts a game of Rock, Paper, Scissors with a mentioned user or bot if no user is mentioned\n- `!dice`: Starts a game of Dice with a mentioned user or bot if no user is mentioned\n-"""
     await message.channel.send(help_message)
   if message.content.startswith('!Version'):
-    await message.channel.send('0.2.4')
+    await message.channel.send('0.2.5')
   if message.content.startswith('!rps'):
     options = ["Rock", "Paper", "Scissors"]
 
