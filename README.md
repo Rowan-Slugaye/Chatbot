@@ -1,5 +1,6 @@
-# dev bot goes down and up as developed but main does not and will stay updated every so and so often here is the invite link for main /n
+# dev bot goes down and up as developed but main does not and will stay updated every so and so often here is the invite link for main 
 [Link to get main on discord server yes it is online same code as github if not forgoten to update](https://discord.com/oauth2/authorize?client_id=1208530587544191057&permissions=0&scope=bot)
+
 this is so you dont have to host it becuse it should be up to date
 
 
