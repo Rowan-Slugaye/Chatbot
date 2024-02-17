@@ -1,3 +1,12 @@
+# dev bot goes down and up as developed but main does not and will stay updated every so and so often here is the invite link for main
+[Link to get main on discord server yes it is online same code as github if not forgoten to update](https://discord.com/oauth2/authorize?client_id=1208530587544191057&permissions=0&scope=bot)
+
+
+
+
+
+
+
 # Python Discord Bot
 
 This is a starting point for making your own Discord bot using Python and the [discordpy](https://discordpy.readthedocs.io/) library.
